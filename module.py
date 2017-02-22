@@ -1,3 +1,5 @@
+# coding: utf8
+
 """
 Ce module devra par la suite etre importer dans le FReveil 
 Module créé le : 2017_2_15
@@ -46,15 +48,16 @@ def meteo ():
     #Telecharger le fichier
     url = "http://www.msn.com/fr-fr/meteo?wealocations=wc:2575&q=Bagnolet%2C+Seine-Saint-Denis"
     liste_python = platform.python_version_tuple()
-
+    htmls = ""
     if liste_python[0] == "2": # Sous python 2
         htmls = urllib.urlopen(url).read()
-        chaine = str(htmls)
+        
 
     if liste_python[0] == "3": # Sous python 3
         from urllib.request import urlopen
-        htmls = urlopen(url).read()
-        chaine = str(htmls)
+        htmls = urlopen(url).read().decode("utf-8")
+        
+    chaine = str(htmls)
 
     #Traitement du fichier
     debut = chaine.find ("t\" aria-label=\"")
@@ -66,6 +69,6 @@ def meteo ():
     chaine_final = chaine_final.replace("&#233;","é")
     chaine_final = chaine_final.replace("&#232;","è")
     chaine_final = chaine_final.replace("&#160;"," ")
-
+    #print("lol")
     #synthese(chaine_final) # On renvoie la chaine que l'on a récuperer
     return chaine_final
